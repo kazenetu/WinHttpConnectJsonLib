@@ -1,0 +1,39 @@
+
+<div class="height-100percent" data-ng-init="login.init()" data-ng-controller="loginController as login">
+    <!-- ヘッダー -->
+    <header data-on-send-root="login.sendRootHeader(src)" data-title-only="true"></header>
+
+
+    <!-- メイン画面 -->
+    <div  class="container main-area" data-ng-cloak >
+        <p class="bg-danger" data-ng-show="login.isError">{{login.errorMsg}}</p>
+
+        <form class="form-horizontal">
+           
+            <div class="form-group {{login.errorUserId}}">
+                    <div class="col-sm-offset-2 col-sm-2 text-right">
+                            <label class="control-label text-right" for="userId">ユーザーID</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" id="userId" class="form-control" data-ng-model="login.userId">
+                        ※「test」でログインできます。
+                    </div>
+                </div>
+                <div class="form-group {{login.errorPassword}}">
+                    <div class="col-sm-offset-2 col-sm-2 text-right">
+                        <label class="control-label" for="password">パスワード</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="password" id="password" class="form-control" data-ng-model="login.password">
+                    </div>
+                </div>
+
+                <!-- ボタン類 -->
+                <div class="form-group buttons-row">
+                    <div class="text-center">
+                        <button class="btn" data-ng-click="login.login()">ログイン</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+ </div>
