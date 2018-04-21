@@ -49,6 +49,21 @@ namespace WebApi.Controllers
 
     #region パブリックメソッド
 
+    /// <summary>
+    /// テストメソッド
+    /// </summary>
+    /// <param name="param"></param>
+    /// <remarks>AutoValidateAntiforgeryToken対象外</remarks>
+    /// <returns></returns>
+    [HttpPost("testPost")]
+    [IgnoreAntiforgeryToken]
+    public IActionResult TestPost([FromBody]Dictionary<string, object> param)
+    {
+      var result = new ResponseDTO(ResponseDTO.Results.OK, string.Empty, param);
+      return Json(result);
+    }
+
+
     #region ログイン・ログアウト
 
     /// <summary>
