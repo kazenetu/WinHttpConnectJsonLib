@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinClient.connectLib;
 
 namespace WinHttpConnectJsonLib
 {
@@ -15,6 +16,20 @@ namespace WinHttpConnectJsonLib
         public Form1()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// 認証なしのWebAPIの呼び出し
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var param = new Dictionary<string, object>() { {"id","test"}, { "test", "test" } };
+
+            var url = "http://localhost:5000/api/account/testPost";
+            var result = HttpConnectLib.Post<object>(url, param);
+            MessageBox.Show(result.ToString());
         }
     }
 }
