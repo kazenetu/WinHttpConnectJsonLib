@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using WebApi.Utilities;
 using static Domain.Service.ServiceBase;
 using WebApi.DTO;
+using DataTransferObjects.Request;
+using DataTransferObjects.Response;
 
 namespace WebApi.Controllers
 {
@@ -73,50 +75,44 @@ namespace WebApi.Controllers
     /// <returns>結果(json)</returns>
     /// <remarks>POST api/user/login</remarks>
     [HttpPost("login")]
-    public IActionResult Login([FromBody]Dictionary<string, object> param)
+    public IActionResult Login([FromBody]LoginRequest param)
     {
-      var paramNameUserId = "id";
-      var paramNamePassword = "password";
-
       // 入力チェック
-      if (!param.ContainsKey(paramNameUserId))
+      if (string.IsNullOrEmpty(param.ID))
       {
-        logger.LogError("Pram[{0}]が未設定", paramNameUserId);
+        logger.LogError("Pram[{0}]が未設定", nameof(param.ID));
         return BadRequest();
       }
-      if (!param.ContainsKey(paramNamePassword))
+      if (string.IsNullOrEmpty(param.Password))
       {
-        logger.LogError("Pram[{0}]が未設定", paramNamePassword);
+        logger.LogError("Pram[{0}]が未設定", nameof(param.Password));
         return BadRequest();
       }
 
-      var userId = param[paramNameUserId].ToString();
-      var password = param[paramNamePassword].ToString();
-
-      var data = new Dictionary<string, object>();
+      var data = new LoginResponse.LoginResponseParam();
       var serviceResult = false;
       try
       {
         var passwordHash = string.Empty;
 
-        var model = service.Find(userId);
+        var model = service.Find(param.ID);
         if (model != null && model.EntryDate.HasValue)
         {
           // パスワードのハッシュ取得
-          passwordHash = HashUtility.Create(model.UserID, password, model.EntryDate.Value);
+          passwordHash = HashUtility.Create(model.UserID, param.Password, model.EntryDate.Value);
         }
 
         // ログインチェック
-        if (service.Login(userId, passwordHash) != null)
+        if (service.Login(param.ID, passwordHash) != null)
         {
           // セッション破棄
           refreshSession();
 
           // セッションキー設定
-          session.SetString(SessionKeyUserID, userId);
+          session.SetString(SessionKeyUserID, param.ID);
 
           serviceResult = true;
-          data.Add("name", model.UserName);
+          data.Name = model.UserName;
         }
       }
       catch (Exception ex)
@@ -125,14 +121,14 @@ namespace WebApi.Controllers
         return BadRequest();
       }
 
-      ResponseDTO result = null;
+      LoginResponse result = null;
       if (serviceResult)
       {
-        result = new ResponseDTO(ResponseDTO.Results.OK, string.Empty, data);
+        result = new LoginResponse(LoginResponse.Results.OK, string.Empty, data);
       }
       else
       {
-        result = new ResponseDTO(ResponseDTO.Results.NG, ErrorLoginNG);
+        result = new LoginResponse(LoginResponse.Results.NG, ErrorLoginNG);
       }
 
       return Json(result);
