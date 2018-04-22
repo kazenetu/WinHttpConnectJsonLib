@@ -85,8 +85,36 @@ namespace WinHttpConnectJsonLib
       // GetTokenメソッド発行
       HttpConnectLib.GetToken(string.Format("{0}", rootURL));
 
+      // ログインWebAPI発行
       var param = new LoginRequest() {ID="test",Password="test" };
       var results = HttpConnectLib.Post<LoginResponse>(string.Format("{0}account/login", getWebApiRootAddress(true)), param);
+
+      // 結果を表示
+      var sb = new StringBuilder();
+      sb.AppendLine($"result = {results.Result}");
+      sb.AppendLine($"message = {results.ErrorMessage}");
+      sb.AppendLine($"data = {results.ResponseData?.Name}");
+      MessageBox.Show(sb.ToString());
+    }
+
+    private void button3_Click(object sender, EventArgs e)
+    {
+      // WebAPIのルートURLを取得
+      var rootURL = getWebApiRootAddress(false);
+
+      // GetTokenメソッド発行
+      HttpConnectLib.GetToken(string.Format("{0}", rootURL));
+
+      // ログインWebAPI発行
+      var param = new LoginRequest() { ID = "test", Password = "test1" };
+      var results = HttpConnectLib.Post<LoginResponse>(string.Format("{0}account/login", getWebApiRootAddress(true)), param);
+
+      // 結果を表示
+      var sb = new StringBuilder();
+      sb.AppendLine($"result = {results.Result}");
+      sb.AppendLine($"message = {results.ErrorMessage}");
+      sb.AppendLine($"data = {results.ResponseData?.Name}");
+      MessageBox.Show(sb.ToString());
     }
   }
 }
