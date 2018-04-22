@@ -8,6 +8,8 @@ namespace WinClient.connectLib
 {
   public class HttpConnectLib
   {
+    private const string HeaderSetCookie = "Set-Cookie";
+
     private static CookieContainer cookies = new CookieContainer();
 
     /// <summary>
@@ -119,7 +121,6 @@ namespace WinClient.connectLib
       return JsonConvert.DeserializeObject<T>(result);
     }
 
-
     /// <summary>
     /// cookie情報の更新
     /// </summary>
@@ -135,8 +136,14 @@ namespace WinClient.connectLib
         baseUri = new Uri(baseUri.AbsoluteUri.Replace(baseUri.AbsolutePath, string.Empty));
       }
 
+      // Cookieが設定されていない場合は終了
+      if (string.IsNullOrEmpty(headers.Get(HeaderSetCookie)))
+      {
+        return;
+      }
+
       var tempCookies = new CookieContainer();
-      tempCookies.SetCookies(baseUri, headers["Set-Cookie"]);
+      tempCookies.SetCookies(baseUri, headers[HeaderSetCookie]);
 
       foreach (Cookie cookie in tempCookies.GetCookies(baseUri))
       {
