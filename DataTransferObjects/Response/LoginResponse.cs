@@ -2,6 +2,10 @@
 {
   public class LoginResponse : BaseResponse<LoginResponse.LoginResponseParam>
   {
+    public LoginResponse()
+    {
+    }
+
     public LoginResponse(Results result, string errorMessage) : base(result, errorMessage)
     {
     }

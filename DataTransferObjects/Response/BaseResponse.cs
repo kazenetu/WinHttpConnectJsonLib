@@ -31,17 +31,21 @@ namespace DataTransferObjects.Response
       {
         return result.ToString();
       }
+      set
+      {
+        Enum.TryParse(value,out result);
+      }
     }
 
     /// <summary>
     /// エラーメッセージ
     /// </summary>
-    public string ErrorMessage { protected set; get; }
+    public string ErrorMessage { set; get; }
 
     /// <summary>
     /// データ
     /// </summary>
-    public T ResponseData { protected set; get; }
+    public T ResponseData { set; get; }
 
     /// <summary>
     /// コンストラクタ
@@ -66,6 +70,13 @@ namespace DataTransferObjects.Response
       this.result = result;
       this.ErrorMessage = errorMessage;
       this.ResponseData = responseData;
+    }
+
+    /// <summary>
+    /// Windowsアプリ用コンストラクタ
+    /// </summary>
+    public BaseResponse()
+    {
     }
   }
 }
