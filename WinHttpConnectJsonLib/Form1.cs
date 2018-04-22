@@ -77,6 +77,11 @@ namespace WinHttpConnectJsonLib
       MessageBox.Show(result.ToString());
     }
 
+    /// <summary>
+    /// ログインWebAPI：成功パターン
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void button2_Click(object sender, EventArgs e)
     {
       // WebAPIのルートURLを取得
@@ -97,6 +102,11 @@ namespace WinHttpConnectJsonLib
       MessageBox.Show(sb.ToString());
     }
 
+    /// <summary>
+    /// ログインWebAPI：失敗パターン
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void button3_Click(object sender, EventArgs e)
     {
       // WebAPIのルートURLを取得
