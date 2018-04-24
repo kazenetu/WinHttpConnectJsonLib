@@ -17,7 +17,7 @@ namespace WinClient.connectLib
     /// </summary>
     /// <param name="url">クエリ付きURL</param>
     /// <returns>レスポンス</returns>
-    public static T Get<T>(string url) where T : new()
+    public static T Get<T>(string url)
     {
       string result = string.Empty;
       HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
@@ -42,9 +42,9 @@ namespace WinClient.connectLib
         sr = new StreamReader(resStream, Encoding.UTF8);
         result = sr.ReadToEnd();
       }
-      catch
+      catch(Exception e)
       {
-        return new T();
+        throw e;
       }
       finally
       {
@@ -76,7 +76,7 @@ namespace WinClient.connectLib
     /// <param name="url">URL</param>
     /// <param name="param">パラメータ</param>
     /// <returns>レスポンス</returns>
-    public static T Post<T>(string url, object param) where T : new()
+    public static T Post<T>(string url, object param)
     {
       string result = string.Empty;
       HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
@@ -107,9 +107,9 @@ namespace WinClient.connectLib
         sr = new StreamReader(resStream, Encoding.UTF8);
         result = sr.ReadToEnd();
       }
-      catch
+      catch(Exception e)
       {
-        return new T();
+        throw e;
       }
       finally
       {
