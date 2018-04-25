@@ -31,17 +31,17 @@ namespace WebAPI.Repositories
       sql.AppendLine("  MT_USER");
       sql.AppendLine("where ");
       sql.AppendLine("  USER_ID = @USER_ID");
-      sql.AppendLine("  AND PASSWORD = @PASSWORD");
+      //sql.AppendLine("  AND PASSWORD = @PASSWORD");
 
       // Param設定
       db.ClearParam();
       db.AddParam("@USER_ID", userID);
-      db.AddParam("@PASSWORD", password);
+      //db.AddParam("@PASSWORD", password);
 
       var result = db.Fill(sql.ToString());
       if (result.Rows.Count > 0)
       {
-        return result.Rows[0].ToString();
+        return result.Rows[0].ItemArray[0].ToString();
       }
 
       return null;
