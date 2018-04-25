@@ -23,7 +23,7 @@ namespace WebAPIFramework.BaseClasses
 
     public RepositoryBase(IDatabase db)
     {
-      db = this.db;
+      this.db = db;
     }
 
     public void Dispose()
