@@ -2,6 +2,9 @@
 WinCEJsonLibのバージョンアップ版。Cookie対応。  
 ASP.NET Core2のWebAPIで動作できる機能を追加。
 
+- [ライブラリ本体：connectLib/HttpConnectLib.cs](https://github.com/kazenetu/WinHttpConnectJsonLib/blob/master/WinHttpConnectJsonLib/connectLib/HttpConnectLib.cs)
+- [必須JSONライブラリ：Newtonsoft.Json.Compact.dll](https://github.com/kazenetu/WinHttpConnectJsonLib/tree/master/WinHttpConnectJsonLib/connectLib/lib)
+
 # 開発環境
 - Visual Studio 2017  
   ※「netstandard2.0」のビルドで必要
